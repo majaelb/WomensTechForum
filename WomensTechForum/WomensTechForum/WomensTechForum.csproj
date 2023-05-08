@@ -13,12 +13,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\MainCategoryAdmin\" />
-    <Folder Include="Pages\Admin\PostAdmin\" />
-    <Folder Include="Pages\Admin\SubCategoryAdmin\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
