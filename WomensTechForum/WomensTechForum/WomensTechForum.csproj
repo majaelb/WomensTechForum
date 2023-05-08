@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\MainCategoryAdmin\" />
+    <Folder Include="Pages\Admin\PostAdmin\" />
+    <Folder Include="Pages\Admin\SubCategoryAdmin\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
