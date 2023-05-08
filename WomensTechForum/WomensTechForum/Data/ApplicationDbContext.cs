@@ -9,5 +9,11 @@ namespace WomensTechForum.Data
             : base(options)
         {
         }
+
+        public DbSet<WomensTechForum.Models.MainCategory> MainCategory { get; set; } = default!;
+
+        public DbSet<WomensTechForum.Models.SubCategory> SubCategory { get; set; } = default!;
+
+        public DbSet<WomensTechForum.Models.Post> Post { get; set; } = default!;
     }
 }
