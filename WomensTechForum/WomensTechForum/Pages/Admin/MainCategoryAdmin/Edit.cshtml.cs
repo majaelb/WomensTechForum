@@ -13,9 +13,9 @@ namespace WomensTechForum.Pages.Admin.MainCategoryAdmin
 {
     public class EditModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public EditModel(WomensTechForum.Data.WomensTechForumContext context)
+        public EditModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }

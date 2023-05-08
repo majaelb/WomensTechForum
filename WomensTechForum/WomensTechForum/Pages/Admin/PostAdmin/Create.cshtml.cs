@@ -12,16 +12,16 @@ namespace WomensTechForum.Pages.Admin.PostAdmin
 {
     public class CreateModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public CreateModel(WomensTechForum.Data.WomensTechForumContext context)
+        public CreateModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
         public IActionResult OnGet()
         {
-        ViewData["SubCategoryId"] = new SelectList(_context.SubCategory, "Id", "Name");
+        ViewData["SubCategoryId"] = new SelectList(_context.Set<SubCategory>(), "Id", "Name");
             return Page();
         }
 

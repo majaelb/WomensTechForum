@@ -19,8 +19,6 @@ namespace WomensTechForum
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddDbContext<WomensTechForumContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("WomensTechForumContext") ?? throw new InvalidOperationException("Connection string 'WomensTechForumContext' not found.")));
             builder.Services.AddRazorPages();
 
             var app = builder.Build();

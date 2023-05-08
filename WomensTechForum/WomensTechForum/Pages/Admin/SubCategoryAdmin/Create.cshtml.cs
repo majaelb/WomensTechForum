@@ -12,9 +12,9 @@ namespace WomensTechForum.Pages.Admin.SubCategoryAdmin
 {
     public class CreateModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public CreateModel(WomensTechForum.Data.WomensTechForumContext context)
+        public CreateModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }

@@ -12,9 +12,9 @@ namespace WomensTechForum.Pages.Admin.PostAdmin
 {
     public class IndexModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public IndexModel(WomensTechForum.Data.WomensTechForumContext context)
+        public IndexModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }

@@ -12,9 +12,9 @@ namespace WomensTechForum.Pages.Admin.PostAdmin
 {
     public class DeleteModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public DeleteModel(WomensTechForum.Data.WomensTechForumContext context)
+        public DeleteModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }

@@ -13,9 +13,9 @@ namespace WomensTechForum.Pages.Admin.PostAdmin
 {
     public class EditModel : PageModel
     {
-        private readonly WomensTechForum.Data.WomensTechForumContext _context;
+        private readonly WomensTechForum.Data.ApplicationDbContext _context;
 
-        public EditModel(WomensTechForum.Data.WomensTechForumContext context)
+        public EditModel(WomensTechForum.Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -36,7 +36,7 @@ namespace WomensTechForum.Pages.Admin.PostAdmin
                 return NotFound();
             }
             Post = post;
-           ViewData["SubCategoryId"] = new SelectList(_context.SubCategory, "Id", "Name");
+           ViewData["SubCategoryId"] = new SelectList(_context.Set<SubCategory>(), "Id", "Name");
             return Page();
         }
 
