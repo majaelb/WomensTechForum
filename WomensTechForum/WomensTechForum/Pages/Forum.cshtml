@@ -10,15 +10,44 @@
 
 <h1 class="display-4">Välkommen till Womens tech forum</h1>
 
-@if(Model.MainCategories != null)
+@if (Model.MainCategories != null)
 {
-    @foreach(var cat in Model.MainCategories)
+    @if (Model.ChosenMainCategory != null)
     {
-        <h1>@cat.Name</h1>
-        @foreach(var sub in Model.SubCategories.Where(s => s.MainCategoryId == cat.Id))
+        <h1>@Model.ChosenMainCategory.Name</h1>
+        @foreach (var sub in Model.SubCategories.Where(s => s.MainCategoryId == Model.ChosenMainCategory.Id))
         {
-            <p class="lead">@sub.Name - <span class="small">@sub.Description</span></p>
-            
+            <p class="lead"><a class="text-decoration-none" asp-route-chosenSubId="@sub.Id">@sub.Name</a> <span class="small"> - @sub.Description</span></p>
+        }
+    }
+    else if(Model.ChosenSubCategory != null)
+    {
+        <h1>@Model.ChosenSubCategory.Name</h1>
+
+        <a href="#">Ny tråd</a>
+        <a href="#" class="btn btn-secondary" title="Dismissible popover" data-bs-toggle="popover" data-bs-trigger="focus">Click me</a>
+        @if(SignInManager.IsSignedIn(User))
+        {
+            <form></form>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                Du är INTE inloggad!
+            </div>
+        }
+        <p>Inga inlägg ännu...</p>
+    }
+    else
+    {
+        @foreach (var cat in Model.MainCategories)
+        {
+            <a class="text-decoration-none" asp-route-chosenMainId="@cat.Id"><h1 class="display-4 text-black">@cat.Name </h1></a>
+            @foreach (var sub in Model.SubCategories.Where(s => s.MainCategoryId == cat.Id))
+            {
+                <p class="lead"><a class="text-decoration-none" asp-route-chosenSubId="@sub.Id">@sub.Name</a> <span class="small"> - @sub.Description</span></p>
+
+            }
         }
     }
 }

@@ -12,22 +12,29 @@ namespace WomensTechForum.Pages
         {
             _context = context;
         }
-
-
         public List<MainCategory>? MainCategories { get; set; }
         public List<SubCategory>? SubCategories { get; set; }
-
+        public MainCategory ChosenMainCategory { get; set; }
+        public SubCategory ChosenSubCategory { get; set; }
         [BindProperty]
         public Post NewPost { get; set; }
 
         public IFormFile? UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
         
         
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId)
         {
-
             MainCategories = await _context.MainCategory.ToListAsync();
             SubCategories = await _context.SubCategory.ToListAsync();
+
+            if(chosenMainId != 0)
+            {
+                ChosenMainCategory = MainCategories.FirstOrDefault(c => c.Id == chosenMainId);
+            }
+            if(chosenSubId != 0) 
+            {
+                ChosenSubCategory = SubCategories.FirstOrDefault(c => c.Id == chosenSubId);
+            }
 
             return Page();
         }
