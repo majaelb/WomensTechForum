@@ -1,0 +1,24 @@
+﻿@page
+@model WomensTechForum.Pages.ForumModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Diskussionsforum";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<h1 class="display-4">Välkommen till Womens tech forum</h1>
+
+@if(Model.MainCategories != null)
+{
+    @foreach(var cat in Model.MainCategories)
+    {
+        <h1>@cat.Name</h1>
+        @foreach(var sub in Model.SubCategories.Where(s => s.MainCategoryId == cat.Id))
+        {
+            <p class="lead">@sub.Name - <span class="small">@sub.Description</span></p>
+            
+        }
+    }
+}

@@ -13,5 +13,7 @@ namespace WomensTechForum.Data
         public DbSet<WomensTechForum.Models.MainCategory> MainCategory { get; set; } = default!;
         public DbSet<WomensTechForum.Models.Post> Post { get; set; } = default!;
         public DbSet<WomensTechForum.Models.SubCategory> SubCategory { get; set; } = default!;
+        public DbSet<WomensTechForum.Models.PostThread> PostThread { get; set; } = default!;
+
     }
 }
