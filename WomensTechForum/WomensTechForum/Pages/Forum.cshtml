@@ -25,16 +25,14 @@
         <h1>@Model.ChosenSubCategory.Name</h1>
 
         
-        <a href="#" class="btn btn-secondary" title="Dismissible popover" data-bs-toggle="popover" data-bs-trigger="focus">Click me</a>
         @if(SignInManager.IsSignedIn(User))
         {
-            <form></form>
+            <a class="btn btn-secondary">Ny tråd</a>
         }
         else
         {
-            <div class="alert alert-danger">
-                Du är INTE inloggad!
-            </div>
+            @*TODO:   Lägg till en Logga in button i popover*@
+            <a href="#" class="btn btn-secondary" title="Vill du skapa en ny tråd?" data-bs-toggle="popover" data-bs-content="Logga in för att skapa en ny forumtråd" data-bs-trigger="focus">Ny tråd</a>
         }
         <p>Inga inlägg ännu...</p>
     }
