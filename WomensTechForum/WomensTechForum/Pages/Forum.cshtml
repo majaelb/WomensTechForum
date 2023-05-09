@@ -20,14 +20,50 @@
             <p class="lead"><a class="text-decoration-none" asp-route-chosenSubId="@sub.Id">@sub.Name</a> <span class="small"> - @sub.Description</span></p>
         }
     }
-    else if(Model.ChosenSubCategory != null)
+    else if (Model.ChosenSubCategory != null)
     {
         <h1>@Model.ChosenSubCategory.Name</h1>
 
-        
-        @if(SignInManager.IsSignedIn(User))
+
+        @if (SignInManager.IsSignedIn(User))
         {
-            <a class="btn btn-secondary">Ny tråd</a>
+            <button class="btn btn-secondary" onclick="openForm()">Ny tråd</button>
+
+            <div class="form-popup" id="myForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="NewPost.Header" class="control-label"></label>
+                                <input asp-for="NewPost.Header" class="form-control" />
+                                <span asp-validation-for="NewPost.Header" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NewPost.Text" class="control-label"></label>
+                                <textarea asp-for="NewPost.Text" class="form-control" rows="5" cols="40"></textarea>
+                                <span asp-validation-for="NewPost.Text" class="text-danger"></span>
+                            </div>
+
+                                <label asp-for="NewPost.ImageSrc" class="control-label"></label>
+                                <input type="file" class="form-control" name="UploadedImage"/>
+                            
+                            <br>
+                            <input asp-for="NewPost.SubCategoryId" type="hidden" value="@Model.ChosenSubCategory.Id" />
+
+                            <div class="form-group">
+                                <input type="submit" value="Posta inlägg" class="btn btn-success" />
+                                <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
+                            </div>
+
+                         
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
         }
         else
         {
@@ -49,3 +85,41 @@
         }
     }
 }
+
+
+
+
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form method="post" id="newPostForm" style="display: none;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NewPost.Header" class="control-label"></label>
+                <input asp-for="NewPost.Header" class="form-control" />
+                <span asp-validation-for="NewPost.Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPost.Text" class="control-label"></label>
+                <textarea asp-for="NewPost.Text" class="form-control" />
+                <span asp-validation-for="NewPost.Text" class="text-danger"></span>
+            </div>
+            @*Datum sätts i backend*@
+@*Offensive ändras av admin*@
+@*<div class="form-group">
+                <label asp-for="NewPost.ImageSrc" class="control-label"></label>
+                <input type="file" class="form-control" name="uploadedImage">*@
+@*<label asp-for="NewPost.ImageSrc" class="control-label"></label>
+                <input asp-for="NewPost.ImageSrc" class="form-control" />
+                <span asp-validation-for="NewPost.ImageSrc" class="text-danger"></span>*@
+@*</div>*@
+@*UserId sätts i backend*@
+@* SubCategoryId sätts i backend*@
+@*<div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>*@
+

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
+using System.Security.Claims;
 using WomensTechForum.Models;
 
 namespace WomensTechForum.Pages
@@ -16,10 +18,12 @@ namespace WomensTechForum.Pages
         public List<SubCategory>? SubCategories { get; set; }
         public MainCategory ChosenMainCategory { get; set; }
         public SubCategory ChosenSubCategory { get; set; }
+
         [BindProperty]
         public Post NewPost { get; set; }
 
-        public IFormFile? UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
+        [BindProperty]
+        public IFormFile UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
         
         
         public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId)
@@ -37,6 +41,33 @@ namespace WomensTechForum.Pages
             }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            string fileName = string.Empty;
+
+            if (UploadedImage != null)
+            {
+                Random rnd = new();
+                fileName = rnd.Next(100000).ToString() + UploadedImage.FileName;
+                var file = "./wwwroot/img/" + fileName;
+
+                using (var fileStream = new FileStream(file, FileMode.Create))
+                {
+                    await UploadedImage.CopyToAsync(fileStream);
+                }
+            }
+
+            NewPost.Date = DateTime.Now;
+            NewPost.ImageSrc = fileName;
+            NewPost.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //NewPost.SubCategoryId = ChosenSubCategory.Id;
+
+            _context.Add(NewPost);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Forum"); 
         }
     }
 }
