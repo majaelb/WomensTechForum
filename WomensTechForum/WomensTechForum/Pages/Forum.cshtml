@@ -54,7 +54,7 @@
                             <input asp-for="NewPost.SubCategoryId" type="hidden" value="@Model.ChosenSubCategory.Id" />
 
                             <div class="form-group">
-                                <input type="submit" value="Posta inlägg" class="btn btn-success" />
+                                <input type="submit" asp-page-handler="NewPost" value="Posta inlägg" class="btn btn-success" />
                                 <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
                             </div>
 
@@ -78,8 +78,11 @@
         {
             @foreach (var post in chosenPosts)
             {
-                <p class="text-muted">@users.FirstOrDefault(u => u.Id == post.UserId).UserName</p>
-                <p><strong>@post.Header</strong></p>
+                <a class="text-decoration-none" asp-route-chosenPostId="@post.Id"><h1 class="display-4 text-black">@post.Header </h1></a>
+                int timeSincePost = DateTime.Now.Date.DayOfYear - post.Date.Value.DayOfYear;
+                <p>Postades för @timeSincePost dagar sedan av @users.FirstOrDefault(u => u.Id == post.UserId).UserName</p>
+@*                <p class="text-muted">@users.FirstOrDefault(u => u.Id == post.UserId).UserName</p>
+               <p><strong>@post.Header</strong></p>*@
                 <p>@post.Text</p>
                 @if (post.ImageSrc.Any())
                 {
@@ -92,7 +95,67 @@
         {
             <p>Inga inlägg ännu...</p>
         }
+
+
     }
+    else if(Model.ChosenPost != null)
+    {
+        <h3>@Model.ChosenPost.Header</h3>
+        <p>Skrevs @Model.ChosenPost.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == Model.ChosenPost.UserId).UserName</p>
+        <p>@Model.ChosenPost.Text</p>
+        @if (Model.ChosenPost.ImageSrc.Any())
+        {
+            <img src="~/img/@Model.ChosenPost.ImageSrc" height="250" />
+        }
+        @if (user != null && user.Id == Model.ChosenPost.UserId)
+        {
+            <a asp-route-deleteid="@Model.ChosenPost.Id" class="btn btn-primary">Ta bort</a>
+        }
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <button class="btn btn-secondary" onclick="openForm()">Svara</button>
+
+            <div class="form-popup" id="myForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="form-group">
+                                <label asp-for="NewPostThread.Text" class="control-label"></label>
+                                <textarea asp-for="NewPostThread.Text" class="form-control" rows="5" cols="40"></textarea>
+                                <span asp-validation-for="NewPostThread.Text" class="text-danger"></span>
+                            </div>
+
+                            <label asp-for="NewPostThread.ImageSrc" class="control-label"></label>
+                            <input type="file" class="form-control" name="UploadedImage" />
+
+                            <br>
+                           <input asp-for="NewPostThread.PostId" type="hidden" value="@Model.ChosenPost.Id" />
+
+                            <div class="form-group">
+                                <input type="submit" asp-page-handler="NewPostThread" value="Svara" class="btn btn-success" />
+                                <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+        else
+        {
+            @*TODO:   Lägg till en Logga in button i popover*@
+            <a href="#" class="btn btn-secondary" title="Vill du delta i tråden?" data-bs-toggle="popover" data-bs-content="Logga in för att svara på inläggen" data-bs-trigger="focus">Svara</a>
+        }
+
+        <hr />
+    }
+
     else
     {
         @foreach (var cat in Model.MainCategories)
