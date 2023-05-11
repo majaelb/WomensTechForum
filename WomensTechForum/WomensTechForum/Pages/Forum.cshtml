@@ -102,61 +102,102 @@
         <!--FirstPost-->
         <div class="bg-info bg-opacity-10">
 
-        <h3>@Model.ChosenPost.Header</h3>
-        <p>Skrevs @Model.ChosenPost.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == Model.ChosenPost.UserId).UserName</p>
-        <p>@Model.ChosenPost.Text</p>
-        @if (Model.ChosenPost.ImageSrc.Any())
-        {
-            <img src="~/img/@Model.ChosenPost.ImageSrc" height="250" />
-        }
-        <br>
-        @if (user != null && user.Id == Model.ChosenPost.UserId)
-        {
-            <a asp-route-deleteid="@Model.ChosenPost.Id" class="btn btn-primary">Ta bort</a>
-        }
+            <h3>@Model.ChosenPost.Header</h3>
+            <p>Skrevs @Model.ChosenPost.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == Model.ChosenPost.UserId).UserName</p>
+            <p>@Model.ChosenPost.Text</p>
+            @if (Model.ChosenPost.ImageSrc.Any())
+            {
+                <img src="~/img/@Model.ChosenPost.ImageSrc" height="250" />
+            }
+            <br>
+            @if (user != null && user.Id == Model.ChosenPost.UserId)
+            {
+                <a asp-route-deleteid="@Model.ChosenPost.Id" class="btn btn-primary">Ta bort</a>
+            }
 
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <button class="btn btn-secondary" onclick="openForm()">Svara</button>
-            <a class="btn btn-danger">Anmäl inlägg</a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <button class="btn btn-secondary" onclick="openForm()">Svara</button>
 
-            <div class="form-popup" id="myForm">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form method="post" enctype="multipart/form-data">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!--Anmälfunktion-->
 
-                            <div class="form-group">
-                                <label asp-for="NewPostThread.Text" class="control-label"></label>
-                                <textarea asp-for="NewPostThread.Text" class="form-control" rows="5" cols="40"></textarea>
-                                <span asp-validation-for="NewPostThread.Text" class="text-danger"></span>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Anmäl inlägg
+                </button>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Anmälan</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
-                            <label asp-for="NewPostThread.ImageSrc" class="control-label"></label>
-                            <input type="file" class="form-control" name="UploadedImage" />
-
-                            <br>
-                            <input asp-for="NewPostThread.PostId" type="hidden" value="@Model.ChosenPost.Id" />
-
-                            <div class="form-group">
-                                <input type="submit" asp-page-handler="NewPostThread" value="Svara" class="btn btn-success" />
-                                <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Vill du verkligen anmäla inlägget?
                             </div>
 
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                @*<form method="post">
+                                <input asp-for="@Model.ChosenPost.Offensive" type="hidden" value="true">
+                                <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
+                                </form>*@
+                                @if(Model.ChosenPost.Offensive == null)
+                                {
+                                    <a asp-route-changeId="@Model.ChosenPost.Id" class="btn btn-danger" >Ja</a>
+                                }
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nej</button>
+                            </div>
 
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        }
-        else
-        @*Post Threads*@
 
-        {
-            @*TODO:   Lägg till en Logga in button i popover*@
-            <a href="#" class="btn btn-secondary" title="Vill du delta i tråden?" data-bs-toggle="popover" data-bs-content="Logga in för att svara på inläggen" data-bs-trigger="focus">Svara</a>
-        }
+                @* <a class="btn btn-outline-danger">Anmäl inlägg</a>*@
+
+                <div class="form-popup" id="myForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <div class="form-group">
+                                    <label asp-for="NewPostThread.Text" class="control-label"></label>
+                                    <textarea asp-for="NewPostThread.Text" class="form-control" rows="5" cols="40"></textarea>
+                                    <span asp-validation-for="NewPostThread.Text" class="text-danger"></span>
+                                </div>
+
+                                <label asp-for="NewPostThread.ImageSrc" class="control-label"></label>
+                                <input type="file" class="form-control" name="UploadedImage" />
+
+                                <br>
+                                <input asp-for="NewPostThread.PostId" type="hidden" value="@Model.ChosenPost.Id" />
+
+                                <div class="form-group">
+                                    <input type="submit" asp-page-handler="NewPostThread" value="Svara" class="btn btn-success" />
+                                    <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            @*Post Threads*@
+
+            {
+                @*TODO:   Lägg till en Logga in button i popover*@
+                <a href="#" class="btn btn-secondary" title="Vill du delta i tråden?" data-bs-toggle="popover" data-bs-content="Logga in för att svara på inläggen" data-bs-trigger="focus">Svara</a>
+            }
         </div>
 
         var chosenPostThreads = Model.PostThreads.Where(p => p.PostId == Model.ChosenPost.Id);
@@ -178,7 +219,7 @@
                 }
                 if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-danger">Anmäl inlägg</a>
+                    <a class="btn btn-outline-danger">Anmäl inlägg</a>
                 }
             }
         }

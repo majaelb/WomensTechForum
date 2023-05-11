@@ -33,7 +33,7 @@ namespace WomensTechForum.Pages
         public IFormFile UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
 
 
-        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid)
+        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid, int changeId)
         {
             MainCategories = await _context.MainCategory.ToListAsync();
             SubCategories = await _context.SubCategory.ToListAsync();
@@ -66,6 +66,16 @@ namespace WomensTechForum.Pages
                     await _context.SaveChangesAsync(); //Spara
 
                     return RedirectToPage("./Forum");//Tillbaka till startsidan
+                }
+            }
+            if(changeId != 0)
+            {
+                Post offensivePost = await _context.Post.FindAsync(changeId);
+
+                if(offensivePost!= null)
+                {
+                    offensivePost.Offensive = true;
+                    await _context.SaveChangesAsync();
                 }
             }
 
@@ -127,5 +137,11 @@ namespace WomensTechForum.Pages
 
             return RedirectToPage("./Forum");
         }
+        //public async Task<IActionResult> OnPostOffensiveAsync()
+        //{
+        //    ChosenPost.Offensive = true;
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToPage("./Forum");
+        //}
     }
 }
