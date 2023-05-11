@@ -147,7 +147,7 @@
                                 <input asp-for="@Model.ChosenPost.Offensive" type="hidden" value="true">
                                 <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
                                 </form>*@
-                                @if(Model.ChosenPost.Offensive == null)
+                                @if(Model.ChosenPost.Offensive == null) //Med null kan inte flera personer anmäla samma inlägg
                                 {
                                     <a asp-route-changeId="@Model.ChosenPost.Id" class="btn btn-danger" >Ja</a>
                                 }
