@@ -6,6 +6,7 @@
 @{
     ViewData["Title"] = "Diskussionsforum";
     var user = await UserManager.GetUserAsync(User);
+    var users = UserManager.Users.ToList();
 }
 
 <h1 class="display-4">Välkommen till Womens tech forum</h1>
@@ -46,9 +47,9 @@
                                 <span asp-validation-for="NewPost.Text" class="text-danger"></span>
                             </div>
 
-                                <label asp-for="NewPost.ImageSrc" class="control-label"></label>
-                                <input type="file" class="form-control" name="UploadedImage"/>
-                            
+                            <label asp-for="NewPost.ImageSrc" class="control-label"></label>
+                            <input type="file" class="form-control" name="UploadedImage" />
+
                             <br>
                             <input asp-for="NewPost.SubCategoryId" type="hidden" value="@Model.ChosenSubCategory.Id" />
 
@@ -57,7 +58,7 @@
                                 <button type="button" class="btn btn-warning" onclick="closeForm()">Stäng</button>
                             </div>
 
-                         
+
                         </form>
                     </div>
                 </div>
@@ -70,7 +71,27 @@
             @*TODO:   Lägg till en Logga in button i popover*@
             <a href="#" class="btn btn-secondary" title="Vill du skapa en ny tråd?" data-bs-toggle="popover" data-bs-content="Logga in för att skapa en ny forumtråd" data-bs-trigger="focus">Ny tråd</a>
         }
-        <p>Inga inlägg ännu...</p>
+
+        var chosenPosts = Model.Posts.Where(p => p.SubCategoryId == Model.ChosenSubCategory.Id);
+
+        if (chosenPosts != null && chosenPosts.Any())
+        {
+            @foreach (var post in chosenPosts)
+            {
+                <p class="text-muted">@users.FirstOrDefault(u => u.Id == post.UserId).UserName</p>
+                <p><strong>@post.Header</strong></p>
+                <p>@post.Text</p>
+                @if (post.ImageSrc.Any())
+                {
+                    <img src="~/img/@post.ImageSrc" height="250" />
+                }
+                <hr />
+            }
+        }
+        else
+        {
+            <p>Inga inlägg ännu...</p>
+        }
     }
     else
     {
@@ -85,41 +106,3 @@
         }
     }
 }
-
-
-
-
-
-
-@*<div class="row">
-    <div class="col-md-4">
-        <form method="post" id="newPostForm" style="display: none;">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NewPost.Header" class="control-label"></label>
-                <input asp-for="NewPost.Header" class="form-control" />
-                <span asp-validation-for="NewPost.Header" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NewPost.Text" class="control-label"></label>
-                <textarea asp-for="NewPost.Text" class="form-control" />
-                <span asp-validation-for="NewPost.Text" class="text-danger"></span>
-            </div>
-            @*Datum sätts i backend*@
-@*Offensive ändras av admin*@
-@*<div class="form-group">
-                <label asp-for="NewPost.ImageSrc" class="control-label"></label>
-                <input type="file" class="form-control" name="uploadedImage">*@
-@*<label asp-for="NewPost.ImageSrc" class="control-label"></label>
-                <input asp-for="NewPost.ImageSrc" class="form-control" />
-                <span asp-validation-for="NewPost.ImageSrc" class="text-danger"></span>*@
-@*</div>*@
-@*UserId sätts i backend*@
-@* SubCategoryId sätts i backend*@
-@*<div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>*@
-

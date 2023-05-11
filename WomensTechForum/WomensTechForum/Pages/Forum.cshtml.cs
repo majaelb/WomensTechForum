@@ -18,6 +18,8 @@ namespace WomensTechForum.Pages
         public List<SubCategory>? SubCategories { get; set; }
         public MainCategory ChosenMainCategory { get; set; }
         public SubCategory ChosenSubCategory { get; set; }
+        public List<Post> Posts { get; set; }
+
 
         [BindProperty]
         public Post NewPost { get; set; }
@@ -30,6 +32,7 @@ namespace WomensTechForum.Pages
         {
             MainCategories = await _context.MainCategory.ToListAsync();
             SubCategories = await _context.SubCategory.ToListAsync();
+            Posts = await _context.Post.ToListAsync();
 
             if(chosenMainId != 0)
             {
