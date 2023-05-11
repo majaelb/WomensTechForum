@@ -29,7 +29,6 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <button class="btn btn-secondary" onclick="openForm()">Ny tråd</button>
-
             <div class="form-popup" id="myForm">
                 <div class="row">
                     <div class="col-md-4">
@@ -119,6 +118,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <button class="btn btn-secondary" onclick="openForm()">Svara</button>
+            <a class="btn btn-danger">Anmäl inlägg</a>
 
             <div class="form-popup" id="myForm">
                 <div class="row">
@@ -149,9 +149,10 @@
                 </div>
             </div>
 
-
         }
         else
+        @*Post Threads*@
+
         {
             @*TODO:   Lägg till en Logga in button i popover*@
             <a href="#" class="btn btn-secondary" title="Vill du delta i tråden?" data-bs-toggle="popover" data-bs-content="Logga in för att svara på inläggen" data-bs-trigger="focus">Svara</a>
@@ -175,13 +176,15 @@
                 {
                     <a asp-route-deleteid="@post.Id" class="btn btn-primary">Ta bort</a>
                 }
-
-
+                if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-danger">Anmäl inlägg</a>
+                }
             }
-
         }
         else
         {
+            <hr />
             <p>Inga svar ännu...</p>
         }
     }
