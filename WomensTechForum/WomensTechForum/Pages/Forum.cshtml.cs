@@ -18,6 +18,8 @@ namespace WomensTechForum.Pages
         public List<SubCategory>? SubCategories { get; set; }
         public MainCategory ChosenMainCategory { get; set; }
         public SubCategory ChosenSubCategory { get; set; }
+
+        [BindProperty]
         public Post ChosenPost { get; set; }
         public List<Post> Posts { get; set; }
         public List<PostThread> PostThreads { get; set; }
@@ -68,13 +70,14 @@ namespace WomensTechForum.Pages
                     return RedirectToPage("./Forum");//Tillbaka till startsidan
                 }
             }
-            if(changeId != 0)
+            if (changeId != 0)
             {
                 Post offensivePost = await _context.Post.FindAsync(changeId);
 
-                if(offensivePost!= null)
+                if (offensivePost != null)
                 {
                     offensivePost.Offensive = true;
+                    //offensivePost.NoOfReports += 1;
                     await _context.SaveChangesAsync();
                 }
             }
@@ -140,8 +143,20 @@ namespace WomensTechForum.Pages
         //public async Task<IActionResult> OnPostOffensiveAsync()
         //{
         //    ChosenPost.Offensive = true;
-        //    await _context.SaveChangesAsync();
+        //    ChosenPost.NoOfReports += 1;
+        //    //if (ChosenPost.Id != 0)
+        //    //{
+        //    //    Post offensivePost = await _context.Post.FindAsync(ChosenPost.Id);
+
+        //    //    if (offensivePost != null)
+        //    //    {
+        //    //        offensivePost.Offensive = true;
+        //    //        offensivePost.NoOfReports += 1;
+        //    //        await _context.SaveChangesAsync();
+        //    //    }
+        //    //}
         //    return RedirectToPage("./Forum");
+
         //}
     }
 }

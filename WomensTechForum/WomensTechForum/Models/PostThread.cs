@@ -9,7 +9,8 @@ namespace WomensTechForum.Models
         [Display(Name = "Inlägg")]
         [Required] public string Text { get; set; }
         public DateTime? Date { get; set; }
-        public bool? Offensive { get; set; }
+        public bool Offensive { get; set; }
+        public int NoOfReports { get; set; }
 
         [Display(Name = "Bild")]
         public string? ImageSrc { get; set; }
