@@ -148,7 +148,7 @@
                     <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
                     </form>*@
 
-                                <a method="post" asp-route-changeId="@Model.ChosenPost.Id" class="btn btn-danger">Ja</a>
+                                <a asp-route-changeId="@Model.ChosenPost.Id" class="btn btn-danger">Ja</a>
 
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nej</button>
                             </div>
@@ -248,7 +248,7 @@
                 <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
                 </form>*@
 
-                                    <a method="post" asp-route-changePTId="@Model.ChosenPostThread.Id" class="btn btn-danger">Ja</a>
+                                    <a asp-route-changePTId="@post.Id" class="btn btn-danger">Ja</a>
 
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nej</button>
                                 </div>
