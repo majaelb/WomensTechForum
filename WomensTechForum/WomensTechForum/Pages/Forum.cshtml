@@ -202,31 +202,31 @@
         var chosenPostThreads = Model.PostThreads.Where(p => p.PostId == Model.ChosenPost.Id);
         if (chosenPostThreads != null && chosenPostThreads.Any())
         {
-            @foreach (var post in chosenPostThreads)
+            @foreach (var postthread in chosenPostThreads)
             {
                 <hr />
-                <p>Skrevs @post.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == @post.UserId).UserName</p>
-                <p>@post.Text</p>
-                @if (post.ImageSrc.Any())
+                <p>Skrevs @postthread.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == @postthread.UserId).UserName</p>
+                <p>@postthread.Text</p>
+                @if (postthread.ImageSrc.Any())
                 {
-                    <img src="~/img/@post.ImageSrc" height="250" />
+                    <img src="~/img/@postthread.ImageSrc" height="250" />
                 }
                 <br />
-                @if (user != null && user.Id == post.UserId)
+                @if (user != null && user.Id == postthread.UserId)
                 {
-                    <a asp-route-deleteid="@post.Id" class="btn btn-primary">Ta bort</a>
+                    <a asp-route-deleteid="@postthread.Id" class="btn btn-primary">Ta bort</a>
                 }
                 if (SignInManager.IsSignedIn(User))
                 {
                     @*<a class="btn btn-outline-danger">Anmäl inlägg</a>*@
                     <!--Anmälfunktion-->
 
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal2">
                         Anmäl inlägg
                     </button>
 
                     <!-- The Modal -->
-                    <div class="modal" id="myModal">
+                    <div class="modal" id="myModal2">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -244,11 +244,12 @@
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
                                     @*<form method="post">
-                <input asp-for="@Model.ChosenPost.NoOfReports" type="hidden">
-                <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
-                </form>*@
-
-                                    <a asp-route-changePTId="@post.Id" class="btn btn-danger">Ja</a>
+                                      <input asp-for="@Model.ChosenPost.NoOfReports" type="hidden">
+                                        <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
+                                    </form>*@
+                                    <p>@postthread.Id</p>
+                                    <p>@postthread.PostId</p>
+                                    <a asp-route-changePTId="@postthread.Id" class="btn btn-danger">Ja</a>
 
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nej</button>
                                 </div>
