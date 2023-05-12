@@ -37,7 +37,7 @@ namespace WomensTechForum.Pages
         public IFormFile UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
 
 
-        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid, int changeId, int changePTId)
+        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid, int deletePTid, int changeId, int changePTId)
         {
             MainCategories = await _context.MainCategory.ToListAsync();
             SubCategories = await _context.SubCategory.ToListAsync();
@@ -67,6 +67,22 @@ namespace WomensTechForum.Pages
                         System.IO.File.Delete("./wwwroot/img/" + post.ImageSrc); //Ta bort bilden
                     }
                     _context.Post.Remove(post); //ta bort inlägget
+                    await _context.SaveChangesAsync(); //Spara
+
+                    return RedirectToPage("./Forum");//Tillbaka till startsidan
+                }
+            }
+            if (deletePTid != 0)
+            {
+                Models.PostThread postThread = await _context.PostThread.FindAsync(deletePTid);
+
+                if (postThread != null)
+                {
+                    if (System.IO.File.Exists("./wwwroot/img/" + postThread.ImageSrc))
+                    {
+                        System.IO.File.Delete("./wwwroot/img/" + postThread.ImageSrc); //Ta bort bilden
+                    }
+                    _context.PostThread.RemoveRange(postThread); //ta bort inlägget
                     await _context.SaveChangesAsync(); //Spara
 
                     return RedirectToPage("./Forum");//Tillbaka till startsidan

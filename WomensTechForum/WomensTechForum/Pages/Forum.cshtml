@@ -214,7 +214,7 @@
                 <br />
                 @if (user != null && user.Id == postthread.UserId)
                 {
-                    <a asp-route-deleteid="@postthread.Id" class="btn btn-primary">Ta bort</a>
+                    <a asp-route-deletePTid="@postthread.Id" class="btn btn-primary">Ta bort</a>
                 }
                 if (SignInManager.IsSignedIn(User))
                 {
