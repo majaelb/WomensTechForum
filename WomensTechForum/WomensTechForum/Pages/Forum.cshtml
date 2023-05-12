@@ -218,7 +218,44 @@
                 }
                 if (SignInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-outline-danger">Anmäl inlägg</a>
+                    @*<a class="btn btn-outline-danger">Anmäl inlägg</a>*@
+                    <!--Anmälfunktion-->
+
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Anmäl inlägg
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Anmälan</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    Vill du verkligen anmäla inlägget?
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    @*<form method="post">
+                <input asp-for="@Model.ChosenPost.NoOfReports" type="hidden">
+                <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
+                </form>*@
+
+                                    <a method="post" asp-route-changePTId="@Model.ChosenPostThread.Id" class="btn btn-danger">Ja</a>
+
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Nej</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 }
             }
         }

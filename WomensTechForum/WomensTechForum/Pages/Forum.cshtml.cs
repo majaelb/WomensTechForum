@@ -21,6 +21,8 @@ namespace WomensTechForum.Pages
 
         [BindProperty]
         public Post ChosenPost { get; set; }
+        [BindProperty]
+        public PostThread ChosenPostThread { get; set; }
         public List<Post> Posts { get; set; }
         public List<PostThread> PostThreads { get; set; }
 
@@ -35,7 +37,7 @@ namespace WomensTechForum.Pages
         public IFormFile UploadedImage { get; set; } //Läggs utanför databas-innehållet för att sparas som en sträng i db längre ner
 
 
-        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid, int changeId)
+        public async Task<IActionResult> OnGetAsync(int chosenMainId, int chosenSubId, int chosenPostId, int deleteid, int changeId, int changePTId)
         {
             MainCategories = await _context.MainCategory.ToListAsync();
             SubCategories = await _context.SubCategory.ToListAsync();
@@ -73,6 +75,17 @@ namespace WomensTechForum.Pages
             if (changeId != 0)
             {
                 Post offensivePost = await _context.Post.FindAsync(changeId);
+
+                if (offensivePost != null)
+                {
+                    offensivePost.Offensive = true;
+                    //offensivePost.NoOfReports += 1;
+                    await _context.SaveChangesAsync();
+                }
+            }
+            if (changePTId != 0)
+            {
+                PostThread offensivePost = await _context.PostThread.FindAsync(changePTId);
 
                 if (offensivePost != null)
                 {
