@@ -83,7 +83,7 @@
                 @*                <p class="text-muted">@users.FirstOrDefault(u => u.Id == post.UserId).UserName</p>
                <p><strong>@post.Header</strong></p>*@
                 <p>@post.Text</p>
-                @if (post.ImageSrc.Any())
+                @if (post.ImageSrc != null && post.ImageSrc.Any())
                 {
                     <img src="~/img/@post.ImageSrc" height="250" />
                 }
@@ -105,7 +105,7 @@
             <h3>@Model.ChosenPost.Header</h3>
             <p>Skrevs @Model.ChosenPost.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == Model.ChosenPost.UserId).UserName</p>
             <p>@Model.ChosenPost.Text</p>
-            @if (Model.ChosenPost.ImageSrc.Any())
+            @if (Model.ChosenPost.ImageSrc != null && Model.ChosenPost.ImageSrc.Any())
             {
                 <img src="~/img/@Model.ChosenPost.ImageSrc" height="250" />
             }
@@ -157,9 +157,6 @@
                     </div>
                 </div>
 
-
-                @* <a class="btn btn-outline-danger">Anmäl inlägg</a>*@
-
                 <div class="form-popup" id="myForm">
                     <div class="row">
                         <div class="col-md-4">
@@ -196,6 +193,8 @@
             {
                 @*TODO:   Lägg till en Logga in button i popover*@
                 <a href="#" class="btn btn-secondary" title="Vill du delta i tråden?" data-bs-toggle="popover" data-bs-content="Logga in för att svara på inläggen" data-bs-trigger="focus">Svara</a>
+                <a href="#" class="btn btn-outline-danger" title="Vill du anmäla inlägget?" data-bs-toggle="popover" data-bs-content="Logga in för att kunna anmäla ett inlägg" data-bs-trigger="focus">Anmäl inlägg</a>
+
             }
         </div>
 
@@ -207,9 +206,7 @@
                 <hr />
                 <p>Skrevs @postthread.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == @postthread.UserId).UserName</p>
                 <p>@postthread.Text</p>
-                <p>@postthread.Id</p>
-                <p>@postthread.PostId</p>
-                @if (postthread.ImageSrc.Any())
+                @if (postthread.ImageSrc != null && postthread.ImageSrc.Any())
                 {
                     <img src="~/img/@postthread.ImageSrc" height="250" />
                 }
@@ -220,15 +217,16 @@
                 }
                 if (SignInManager.IsSignedIn(User))
                 {
+                    <a asp-route-changePTId="@postthread.Id" class="btn btn-outline-danger">Anmäl inlägg</a>
+
                     @*<a class="btn btn-outline-danger">Anmäl inlägg</a>*@
                     <!--Anmälfunktion-->
-
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal2">
+                    @*<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal2">
                         Anmäl inlägg
-                    </button>
+                    </button>*@
 
                     <!-- The Modal -->
-                    <div class="modal" id="myModal2">
+                    @*<div class="modal" id="myModal2">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -245,10 +243,10 @@
 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    @*<form method="post">
+                                    <form method="post">
                                       <input asp-for="@Model.ChosenPost.NoOfReports" type="hidden">
                                         <input type="submit" class="btn btn-danger" asp-page-handler="Offensive" data-bs-dismiss="modal" value="Ja">
-                                    </form>*@
+                                    </form>
                                     <p>@postthread.Id</p>
                                     <p>@postthread.PostId</p>
                                     <a asp-route-changePTId="@postthread.Id" class="btn btn-danger">Ja</a>
@@ -258,7 +256,11 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div>*@
+                }
+                else
+                {
+                    <a href="#" class="btn btn-outline-danger" title="Vill du anmäla inlägget?" data-bs-toggle="popover" data-bs-content="Logga in för att kunna anmäla ett inlägg" data-bs-trigger="focus">Anmäl inlägg</a>
                 }
             }
         }

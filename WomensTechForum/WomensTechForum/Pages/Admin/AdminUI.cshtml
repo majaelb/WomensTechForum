@@ -13,6 +13,8 @@
         <th>Text</th>
         <th>Antal anmälningar</th>
         <th>Bild</th>
+        <th>Ändra</th>
+        <th>Ta bort</th>
     </tr>
     @foreach (var post in Model.ReportedPosts)
     {
@@ -22,7 +24,7 @@
             <td>@post.Header</td>
             <td>@post.Text</td>
             <td>@post.NoOfReports</td>
-            @if (post.ImageSrc.Any())
+            @if (post.ImageSrc != null && post.ImageSrc.Any())
             {
                 <td><img src="~/img/@post.ImageSrc" height="50" /></td>
             }
@@ -30,7 +32,15 @@
             {
                 <td> </td>
             }
+            <td>
+                <a asp-route-changeId="@post.Id">Markera som ej stötande</a> 
+            </td>
+            <td><a asp-route-deleteId="@post.Id">Stötande inlägg - Radera</a></td>
         </tr>
+
+        @*
+    asp-page="./OffensivePosts/Edit"
+        asp-page="./OffensivePosts/Delete"*@
     }
 
 </table>
@@ -39,10 +49,11 @@
     <tr>
         <th>Användare</th>
         <th>Datum</th>
-        <th>Rubrik</th>
         <th>Text</th>
         <th>Antal anmälningar</th>
         <th>Bild</th>
+        <th>Ändra</th>
+        <th>Ta bort</th>
     </tr>
     @foreach (var post in Model.ReportedPostThreads)
     {
@@ -51,7 +62,7 @@
             <td>@post.Date</td>
             <td>@post.Text</td>
             <td>@post.NoOfReports</td>
-            @if (post.ImageSrc.Any())
+            @if (post.ImageSrc != null && post.ImageSrc.Any())
             {
                 <td><img src="~/img/@post.ImageSrc" height="50" /></td>
             }
@@ -59,6 +70,8 @@
             {
                 <td> </td>
             }
+            <td><a asp-route-changePTId="@post.Id">Markera som ej stötande</a></td>
+            <td><a asp-route-deletePTId="@post.Id">Stötande inlägg - Radera</a></td>
         </tr>
     }
 

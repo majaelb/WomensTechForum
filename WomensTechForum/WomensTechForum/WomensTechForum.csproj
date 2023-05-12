@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\MainCategories\" />
+    <Folder Include="Pages\Admin\SubCategories\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

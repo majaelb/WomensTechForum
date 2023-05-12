@@ -95,7 +95,7 @@ namespace WomensTechForum.Pages
                 if (offensivePost != null)
                 {
                     offensivePost.Offensive = true;
-                    //offensivePost.NoOfReports += 1;
+                    offensivePost.NoOfReports += 1;
                     await _context.SaveChangesAsync();
                 }
             }
@@ -106,7 +106,7 @@ namespace WomensTechForum.Pages
                 if (offensivePost != null)
                 {
                     offensivePost.Offensive = true;
-                    //offensivePost.NoOfReports += 1;
+                    offensivePost.NoOfReports += 1;
                     await _context.SaveChangesAsync();
                 }
             }
