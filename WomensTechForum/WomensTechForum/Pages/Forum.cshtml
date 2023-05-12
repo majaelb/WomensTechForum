@@ -207,6 +207,8 @@
                 <hr />
                 <p>Skrevs @postthread.Date.Value.ToString("f") av @users.FirstOrDefault(u => u.Id == @postthread.UserId).UserName</p>
                 <p>@postthread.Text</p>
+                <p>@postthread.Id</p>
+                <p>@postthread.PostId</p>
                 @if (postthread.ImageSrc.Any())
                 {
                     <img src="~/img/@postthread.ImageSrc" height="250" />
